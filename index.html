@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OPL Module Split</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --ink-2: #525252;
+    --ink-3: #a3a3a3;
+    --line: #e5e5e5;
+    --bg: #ffffff;
+    --purple: #261640;
+    --purple-soft: #f3f2f5;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Google Sans Flex", "Google Sans", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { width: 1200px; margin: 0 auto; padding: 56px 56px 48px; }
+
+  header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; }
+  .eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--purple); margin-bottom: 10px; }
+  h1 { font-size: 34px; font-weight: 600; letter-spacing: -.02em; line-height: 1.15; }
+  .sub { font-size: 15px; color: var(--ink-2); margin-top: 8px; }
+  .legend { display: flex; gap: 14px; align-items: center; font-size: 13px; color: var(--ink-2); }
+  .legend span { display: flex; align-items: center; gap: 6px; }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    text-align: left; font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--ink-2); padding: 0 16px 12px; border-bottom: 2px solid var(--ink);
+  }
+  thead th.c { text-align: center; width: 140px; white-space: nowrap; }
+  td { padding: 13px 16px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 14.5px; line-height: 1.45; }
+  td.c { text-align: center; vertical-align: middle; }
+  td.name { font-weight: 500; width: 300px; }
+  td.name small { display: block; font-weight: 400; color: var(--ink-2); font-size: 13px; margin-top: 2px; }
+  td.why { color: var(--ink-2); }
+
+  tr.group td {
+    padding: 22px 16px 8px; border-bottom: none;
+    font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--purple);
+  }
+  tr.shared td { background: var(--purple-soft); }
+
+  .pill {
+    display: inline-block; min-width: 72px; padding: 4px 12px; border-radius: 999px;
+    font-size: 12.5px; font-weight: 600; text-align: center;
+  }
+  .high { background: var(--purple); color: #fff; }
+  .med { border: 1.5px solid var(--purple); color: var(--purple); padding: 2.5px 10.5px; }
+  .low { color: var(--ink-3); font-weight: 500; }
+
+  .takeaways { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 36px; }
+  .card { border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; }
+  .card.accent { border-color: var(--purple); }
+  .card h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .card h3 i { width: 8px; height: 8px; border-radius: 50%; background: var(--purple); display: inline-block; }
+  .card p { font-size: 13.5px; line-height: 1.5; color: var(--ink-2); }
+
+  footer { margin-top: 24px; font-size: 12.5px; color: var(--ink-3); display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div>
+      <div class="eyebrow">OPL · MSME Platform</div>
+      <h1>Who each module is for</h1>
+      <p class="sub">CA on desktop vs owner on mobile, by sub-module</p>
+    </div>
+    <div class="legend">
+      <span><b class="pill high">High</b></span>
+      <span><b class="pill med">Medium</b></span>
+      <span><b class="pill low">Low</b></span>
+    </div>
+  </header>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Module</th>
+        <th class="c">CA · Desktop</th>
+        <th class="c">Owner · Mobile</th>
+        <th>Why</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="group"><td colspan="4">M1 · Onboarding</td></tr>
+      <tr>
+        <td class="name">Entry<small>PAN, OTP, intent, consent</small></td>
+        <td class="c"><span class="pill low">Low</span></td>
+        <td class="c"><span class="pill high">High</span></td>
+        <td class="why">OTP goes to the owner's phone. The owner decides what to share, and consent is where trust breaks.</td>
+      </tr>
+      <tr>
+        <td class="name">Document upload<small>GST, ITR, bank</small></td>
+        <td class="c"><span class="pill high">High</span></td>
+        <td class="c"><span class="pill low">Low</span></td>
+        <td class="why">CAs do most uploads today. Owners asked to let their CA finish. A CA-assisted path is already in build.</td>
+      </tr>
+
+      <tr class="group"><td colspan="4">M2 · BMR, Dashboard &amp; Intelligence</td></tr>
+      <tr>
+        <td class="name">Dashboard home + BMR</td>
+        <td class="c"><span class="pill med">Medium</span></td>
+        <td class="c"><span class="pill high">High</span></td>
+        <td class="why">The owner's quick check: where I stand and what to do next.</td>
+      </tr>
+      <tr>
+        <td class="name">AI Snapshot</td>
+        <td class="c"><span class="pill low">Low</span></td>
+        <td class="c"><span class="pill high">High</span></td>
+        <td class="why">A one-page summary for owners. Detail stays on desktop.</td>
+      </tr>
+      <tr>
+        <td class="name">Analytic Insights</td>
+        <td class="c"><span class="pill med">Medium</span></td>
+        <td class="c"><span class="pill low">Low</span></td>
+        <td class="why">Data comparisons, like GST vs bank credits. Suits someone who reads numbers.</td>
+      </tr>
+      <tr>
+        <td class="name">GST Analysis</td>
+        <td class="c"><span class="pill high">High</span></td>
+        <td class="c"><span class="pill low">Low</span></td>
+        <td class="why">GSTR-1 vs 3B, ITC, ledgers and compliance score are finance staff work. Owners need alerts only.</td>
+      </tr>
+      <tr>
+        <td class="name">ITR Analysis</td>
+        <td class="c"><span class="pill high">High</span></td>
+        <td class="c"><span class="pill low">Low</span></td>
+        <td class="why">Ratios and P&amp;L across two years. CAs file the ITR anyway.</td>
+      </tr>
+      <tr>
+        <td class="name">Bank Statement Analysis</td>
+        <td class="c"><span class="pill high">High</span></td>
+        <td class="c"><span class="pill med">Medium</span></td>
+        <td class="why">CAs read the detail. Owners care about cash position and bounces.</td>
+      </tr>
+      <tr>
+        <td class="name">Monthly data refresh</td>
+        <td class="c"><span class="pill high">High</span></td>
+        <td class="c"><span class="pill med">Medium</span></td>
+        <td class="why">CAs upload. Owners get a nudge to approve or pass it on.</td>
+      </tr>
+
+      <tr class="group"><td colspan="4">M5 · Finance Hub</td></tr>
+      <tr>
+        <td class="name">Loan Offers</td>
+        <td class="c"><span class="pill med">Medium</span></td>
+        <td class="c"><span class="pill high">High</span></td>
+        <td class="why">The owner decides whether and how much to borrow, and wants one best offer, not a list.</td>
+      </tr>
+      <tr>
+        <td class="name">Loan Applications</td>
+        <td class="c"><span class="pill high">High</span></td>
+        <td class="c"><span class="pill med">Medium</span></td>
+        <td class="why">CAs handle documents for final approval. Owners track status.</td>
+      </tr>
+      <tr>
+        <td class="name">Debt Profile</td>
+        <td class="c"><span class="pill med">Medium</span></td>
+        <td class="c"><span class="pill high">High</span></td>
+        <td class="why">Credit health in plain language. Nobody owns this today.</td>
+      </tr>
+      <tr>
+        <td class="name">Pending Actions + due alerts</td>
+        <td class="c"><span class="pill med">Medium</span></td>
+        <td class="c"><span class="pill high">High</span></td>
+        <td class="why">"Mark as paid" suits mobile. Owners stop calling the CA for every deadline.</td>
+      </tr>
+      <tr>
+        <td class="name">TReDS<small>Invoice discounting</small></td>
+        <td class="c"><span class="pill high">High</span></td>
+        <td class="c"><span class="pill low">Low</span></td>
+        <td class="why">Invoice-level work for accounts or the CA.</td>
+      </tr>
+
+      <tr class="group"><td colspan="4">M7 · Subsidies &amp; AI Mitra</td></tr>
+      <tr>
+        <td class="name">Subsidy discovery + estimate</td>
+        <td class="c"><span class="pill med">Medium</span></td>
+        <td class="c"><span class="pill high">High</span></td>
+        <td class="why">Owners valued this most. Alerts for new schemes fit mobile well.</td>
+      </tr>
+      <tr>
+        <td class="name">Refine matches + apply</td>
+        <td class="c"><span class="pill high">High</span></td>
+        <td class="c"><span class="pill low">Low</span></td>
+        <td class="why">The accounts team, reps or CA track schemes. Applying needs many documents.</td>
+      </tr>
+      <tr>
+        <td class="name">AI Mitra</td>
+        <td class="c"><span class="pill med">Medium</span></td>
+        <td class="c"><span class="pill high">High</span></td>
+        <td class="why">Quick, specific answers and deadline reminders for owners.</td>
+      </tr>
+
+      <tr class="group"><td colspan="4">M4 · Discovery &amp; Network</td></tr>
+      <tr>
+        <td class="name">Discovery Hub + My Networks</td>
+        <td class="c"><span class="pill low">Low</span></td>
+        <td class="c"><span class="pill high">High</span></td>
+        <td class="why">The owner holds supplier and buyer relationships. In-app calling works better on mobile.</td>
+      </tr>
+      <tr>
+        <td class="name">Profile, catalogue, privacy</td>
+        <td class="c"><span class="pill low">Low</span></td>
+        <td class="c"><span class="pill med">Medium</span></td>
+        <td class="why">The owner sets visibility. Staff can upload the catalogue.</td>
+      </tr>
+
+      <tr class="group"><td colspan="4">Shared</td></tr>
+      <tr class="shared">
+        <td class="name">Roles + sharing with CA</td>
+        <td class="c"><span class="pill high">High</span></td>
+        <td class="c"><span class="pill high">High</span></td>
+        <td class="why">The owner grants access on mobile. The CA works inside it.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="takeaways">
+    <div class="card accent">
+      <h3><i></i>Owner mobile app</h3>
+      <p>Home + BMR, AI Snapshot, Loan Offers, Debt Profile, Pending Actions, Subsidy discovery, Discovery Hub, AI Mitra, onboarding entry.</p>
+    </div>
+    <div class="card">
+      <h3>CA desktop</h3>
+      <p>Document onboarding, GST, ITR and bank analysis, loan applications, TReDS, scheme applications, monthly refresh.</p>
+    </div>
+    <div class="card">
+      <h3>The handoff</h3>
+      <p>Onboarding and data sharing are where the two meet. Owners start or approve, CAs finish. Nobody designs this today.</p>
+    </div>
+  </div>
+
+  <footer>
+    <span>CA column is a hypothesis. To validate with OPL on 6 Oct.</span>
+    <span>Parallel · Oct 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
